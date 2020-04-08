@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{pages.title}}{% endblock %}
+{% block content %}
+{% include 'consumptions/includes/consumptions_menu.html' %}
+<main role="main">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Analisis Respecto al anterior = (hay que llamar al metodo que entrega) </h2>
+
+                <h5 class="card-title"> Consumo Boleta N° {{consumption.id|safe}}</h5>
+                <h1>Litros = {{ litros|floatformat:4 }}</h1>
+                <p><a id="crear_detalle" href="{% url 'consumptions:update' consumption.id %}"
+                      class="btn btn-info">
+                    <span class="icon-edit">Editar</span>
+                </a></p>
+                <p><a id="delete_consumption" class="btn btn-danger"
+                      href="{% url 'consumptions:delete' consumption.id %}">
+                    <spam class="icon-trash">Borrar</spam>
+                </a>
+                </p>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Odometro</dt>
+                    <dd class="col-sm-9">{{ consumption.odometro }}</dd>
+                    <dt class="col-sm-3">Monto</dt>
+                    <dd class="col-sm-9">{{ consumption.monto }}</dd>
+                    <dt class="col-sm-3">Precio/Lt</dt>
+                    <dd class="col-sm-9">{{ consumption.precio_litro }}</dd>
+                    <dt class="col-sm-3">Monto</dt>
+                    <dd class="col-sm-9">{{ consumption.monto }}</dd>
+                    <dt class="col-sm-3">Fecha</dt>
+                    <dd class="col-sm-9">{{ consumption.fecha }}</dd>
+                </dl>
+                <span class="glyphicon glyphicon-remove">Botón pequeño</span>
+            </div>
+            {% if consumption.imagen %}
+            <img src="{{ consumption.imagen.url }}" class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0">
+            {% else %}
+            <img src="{% static 'consumptions/img/no-foto.jpg' %}"
+                 class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0">
+            {% endif %}
+        </div>
+    </div>
+</main>
+{% endblock %}

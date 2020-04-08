@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Listado Consumos{% endblock %}
+{% block content %}
+{% include 'consumptions/includes/consumptions_menu.html' %}
+<main role="main">
+    <div class="container">
+        <h1>$ {{sumaMonto|floatformat:0|intcomma}}</h1>
+        <h1>Kilometraje Total Recorrido = {{odo|intcomma}}</h1>
+        {% if not query %}
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <td> Odometro</td>
+                <td> N° Boleta</td>
+                <td> Precio $-Litro</td>
+                <td> Monto</td>
+                <td> Fecha</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for consumption in consumo_list|dictsort:"id" %}
+            <tr>
+                <td><a href="{% url 'consumptions:consumption' consumption.id consumption.odometro %}">{{consumption.odometro}}</a>
+                </td>
+                <td>{{ consumption.boleta }}</td>
+                <td>$ {{ consumption.precio_litro|floatformat:0|intcomma }}</td>
+                <td>$ {{ consumption.monto|floatformat:0|intcomma }}</td>
+                <td>{{ consumption.fecha }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="col-lg-1">
+            <a id="crear_detalle" href="#" class="btn btn-info btn-block">
+                <span class="glyphicon glyphicon-list-alt"></span>
+            </a>
+        </div>
+        <h1>sin datos</h1>
+        {% endif %}
+
+    </div>
+</main>
+{% endblock %}
